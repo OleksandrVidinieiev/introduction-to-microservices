@@ -38,8 +38,8 @@ public class ResourceController {
     headers.setContentType(MediaType.parseMediaType("audio/mpeg"));
 
     return ResponseEntity.ok()
-        .headers(headers)
-        .body(audioData);
+      .headers(headers)
+      .body(audioData);
   }
 
   @DeleteMapping

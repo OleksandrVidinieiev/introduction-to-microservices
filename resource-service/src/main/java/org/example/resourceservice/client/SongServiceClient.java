@@ -1,6 +1,10 @@
 package org.example.resourceservice.client;
 
+import java.util.Collection;
+
+import org.apache.commons.lang3.StringUtils;
 import org.example.resourceservice.dto.SongMetadataDto;
+import org.example.resourceservice.exception.SongServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,16 +27,21 @@ public class SongServiceClient {
           Object.class
       );
     } catch (Exception e) {
-      System.err.println("Failed to send metadata to Song Service: " + e.getMessage());
+      String errorMessage = "Failed to create metadata for resource " + metadata.getId();
+      System.err.println(errorMessage);
+      throw new SongServiceException(errorMessage, e);
     }
   }
 
-  public void deleteSongMetadata(Long id) {
+  public void deleteSongMetadata(Collection<Long> ids) {
     try {
+      String idsCsv = StringUtils.join(ids, ',');
       String url = songServiceUrl + "/songs?id={id}";
-      restTemplate.delete(url, id);
+      restTemplate.delete(url, idsCsv);
     } catch (Exception e) {
-      System.err.println("Failed to delete metadata in Song Service for ID " + id + ": " + e.getMessage());
+      String errorMessage = "Failed to delete metadata for resources with IDs: " + ids;
+      System.err.println(errorMessage);
+      throw new SongServiceException(errorMessage, e);
     }
   }
 }

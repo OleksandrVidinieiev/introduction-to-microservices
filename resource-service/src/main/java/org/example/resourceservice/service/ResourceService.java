@@ -53,9 +53,12 @@ public class ResourceService {
     for (Long id : ids) {
       if (resourceRepository.existsById(id)) {
         resourceRepository.deleteById(id);
-        songServiceClient.deleteSongMetadata(id);
         deletedIds.add(id);
       }
+    }
+
+    if (!deletedIds.isEmpty()) {
+      songServiceClient.deleteSongMetadata(deletedIds);
     }
 
     return deletedIds;
