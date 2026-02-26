@@ -26,7 +26,7 @@ public class SongDto {
   private String album;
 
   @NotNull(message = "Duration is required")
-  @Pattern(regexp = "^\\d{2}:\\d{2}$", message = "Duration must be in mm:ss format with leading zeros")
+  @Pattern(regexp = "^\\d{2}:[0-5][0-9]$", message = "Duration must be in mm:ss format with leading zeros")
   private String duration;
 
   @NotNull(message = "Year is required")
