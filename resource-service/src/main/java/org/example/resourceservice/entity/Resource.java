@@ -16,7 +16,6 @@ public class Resource {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Lob
   @Column(name = "data", nullable = false)
   private byte[] data;
 }
