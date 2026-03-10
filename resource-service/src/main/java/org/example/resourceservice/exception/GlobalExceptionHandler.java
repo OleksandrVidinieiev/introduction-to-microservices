@@ -49,6 +49,9 @@ public class GlobalExceptionHandler {
   public ResponseEntity<Map<String, String>> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
     Map<String, String> response = new HashMap<>();
     String contentType = ex.getContentType() != null ? ex.getContentType().toString() : "unknown";
+    if (contentType.contains(";charset=UTF-8")) {
+      contentType = contentType.replace(";charset=UTF-8", "");
+    }
     String errorMessage = "Invalid file format: " + contentType + ". Only MP3 files are allowed";
     response.put("errorMessage", errorMessage);
     response.put("errorCode", "400");
