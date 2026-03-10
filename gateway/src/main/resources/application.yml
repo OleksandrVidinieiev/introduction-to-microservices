@@ -1,0 +1,32 @@
+server:
+  port: 8084
+  servlet:
+    encoding:
+      enabled: false
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: resourceService
+              uri: lb://resource-service
+              predicates:
+                - Path=/resources/**
+            - id: songService
+              uri: lb://song-service
+              predicates:
+                - Path=/songs/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8083/eureka}
+    registry-fetch-interval-seconds: 5
+  instance:
+    lease-renewal-interval-in-seconds: 5
+
+
